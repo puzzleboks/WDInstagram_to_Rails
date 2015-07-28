@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
   # index
   def index
-    @entries = Entry.all
+    @entries = Entry.all.order(:id).reverse
   end
 
   # new
