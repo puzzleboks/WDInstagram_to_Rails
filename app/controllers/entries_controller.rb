@@ -6,65 +6,91 @@ class EntriesController < ApplicationController
 
   # new
   def new
-    @artist = Artist.new
+    @entry = Entry.new
   end
 
   # create
   def create
-    @artist = Artist.create!(artist_params)
-    redirect_to (artist_path(@artist))
+    @entry = Entry.new( params[:entry] )
+    @entry.update( date_taken: Time.now.strftime("%B %d, %Y") )
+    if @entry.save
+      redirect "/entries/#{@entry.id}"
+    else
+      redirect "/entries/new"
+    end
   end
 
   #show
   def show
-    @artist = Artist.find(params[:id])
+    @entry = Entry.find( params[:id] )
   end
 
   # edit
   def edit
-    @artist = Artist.find(params[:id])
+    @entry = Entry.find( params[:id] )
   end
-
 
   # update
   def update
-    @artist = Artist.find(params[:id])
-    @artist.update(artist_params)
-    redirect_to artist_path(@artist)
+    @entry = Entry.find( params[:id] )
+    @entry.update( params[:entry] )
+    redirect_to "/entries/#{@entry.id}"
   end
 
   # destroy
   def destroy
-    @artist = Artist.find(params[:id])
-    @artist.destroy
-    redirect_to artists_path
+    @entry = Entry.find( params[:id] )
+    @entry.destroy
+    redirect_to "/"
   end
 
-  # # index
-  # get "/" do
-  #   @entries = Entry.all
-  #   erb :"index"
-  # end
-  #
-  # get "/entries" do
-  #   # @entries = Entry.all
-  #   erb :"entries/index"
-  # end
-  #
-  # # new
-  # get '/entries/new' do
-  #   erb :"entries/new"
-  # end
-  #
-  # # show
-  # get '/entries/:id' do
-  #   # @apartments = Apartment.find(params[:id])
-  #   erb :"entries/show"
-  # end
-  # # create
-  # post '/entries' do
-  #   # @apartment = Apartment.create(params[:apartment])
-  #   # redirect "/apartment/#{@apartment.id}"
-  # end
+#   # index
+# get "/" do
+#   @entries = Entry.all.order(:id).reverse
+#   erb :index
+# end
+#
+# # new
+# get "/entries/new" do
+#   @entry = Entry.new
+#   erb :new
+# end
+#
+# # create
+# post "/entries" do
+#   @entry = Entry.new( params[:entry] )
+#   @entry.update( date_taken: Time.now.strftime("%B %d, %Y") )
+#   if @entry.save
+#     redirect "/entries/#{@entry.id}"
+#   else
+#     redirect "/entries/new"
+#   end
+# end
+#
+# # edit
+# get "/entries/:id/edit" do
+#   @entry = Entry.find( params[:id] )
+#   erb :edit
+# end
+#
+# # update
+# put "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   @entry.update( params[:entry] )
+#   redirect "/entries/#{@entry.id}"
+# end
+#
+# # show
+# get "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   erb :show
+# end
+#
+# # delete
+# delete "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   @entry.destroy
+#   redirect "/"
+# end
 
 end

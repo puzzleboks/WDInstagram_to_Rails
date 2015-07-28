@@ -1,33 +1,59 @@
 Rails.application.routes.draw do
   get "entries" => "entries#index"
-  get "entries" => "entries#new"
-  get "entries" => "entries#show"
+  get "entries/new" => "entries#new"
   post "entries" => "entries#create"
+  get "entries/:id" => "entries#show"
+  get "entries/:id/edit" => "entries#edit"
+  put "entries/:id" => "entries#update"
+  delete "entries/:id" => "entries#destroy"
+
 end
 
-# # index
+#   # index
 # get "/" do
-#   @entries = Entry.all
-#   erb :"index"
-# end
-#
-# get "/entries" do
-#   # @entries = Entry.all
-#   erb :"entries/index"
+#   @entries = Entry.all.order(:id).reverse
+#   erb :index
 # end
 #
 # # new
-# get '/entries/new' do
-#   erb :"entries/new"
+# get "/entries/new" do
+#   @entry = Entry.new
+#   erb :new
+# end
+#
+# # create
+# post "/entries" do
+#   @entry = Entry.new( params[:entry] )
+#   @entry.update( date_taken: Time.now.strftime("%B %d, %Y") )
+#   if @entry.save
+#     redirect "/entries/#{@entry.id}"
+#   else
+#     redirect "/entries/new"
+#   end
+# end
+#
+# # edit
+# get "/entries/:id/edit" do
+#   @entry = Entry.find( params[:id] )
+#   erb :edit
+# end
+#
+# # update
+# put "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   @entry.update( params[:entry] )
+#   redirect "/entries/#{@entry.id}"
 # end
 #
 # # show
-# get '/entries/:id' do
-#   # @apartments = Apartment.find(params[:id])
-#   erb :"entries/show"
+# get "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   erb :show
 # end
-# # create
-# post '/entries' do
-#   # @apartment = Apartment.create(params[:apartment])
-#   # redirect "/apartment/#{@apartment.id}"
+#
+# # delete
+# delete "/entries/:id" do
+#   @entry = Entry.find( params[:id] )
+#   @entry.destroy
+#   redirect "/"
 # end
