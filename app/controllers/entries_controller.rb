@@ -41,7 +41,12 @@ class EntriesController < ApplicationController
   def destroy
     @entry = Entry.find( params[:id] )
     @entry.destroy
-    redirect_to "/"
+    redirect_to "/entries"
+  end
+
+  private
+  def entry_params
+    params.require(:entry).permit(:author, :photo_url, :date_taken)
   end
 
 #   # index
